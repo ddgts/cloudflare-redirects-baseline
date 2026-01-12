@@ -1,0 +1,60 @@
+**** Remove this heading line before paste - For developer preview only***********
+for final file use the content from - worker.js file
+
+
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    const host = url.hostname.toLowerCase();
+
+    // =========================================================
+    // PREVIEW-ONLY HELPER (developer-only trick)
+    // - Preview runs on *.workers.dev, so your redirects won't match there.
+    // - This block makes Preview show useful debug output.
+    // - Safe to remove later.
+    // =========================================================
+    if (host.endsWith(".workers.dev")) {
+      return new Response(
+        JSON.stringify(
+          {
+            message: "Worker preview active",
+            preview_hostname: host,
+            note: "Redirects only trigger on your real routed domains (e.g., desi4k.mydesitv.com).",
+            example_test_url: "https://desi4k.mydesitv.com/"
+          },
+          null,
+          2
+        ),
+        {
+          status: 200,
+          headers: { "content-type": "application/json; charset=utf-8" }
+        }
+      );
+    }
+
+    // =========================================================
+    // FINAL: Redirect map (add all subdomains here)
+    // =========================================================
+    const redirects = {
+
+
+      Add your url as in example file
+
+      };
+
+    // 1) Vanity redirects — redirect immediately
+    const target = redirects[host];
+    if (target) return Response.redirect(target, 301);
+
+    // 2) Main site only — force HTTPS (edit these if needed)
+    const mainHosts = new Set(["yourdomain.com", "www.yourdomain.com"]);
+    if (url.protocol === "http:" && mainHosts.has(host)) {
+      url.protocol = "https:";
+      return Response.redirect(url.toString(), 301);
+    }
+
+    // 3) Unknown hostnames — block
+    return new Response("Not found", { status: 404 });
+  }
+};
+
