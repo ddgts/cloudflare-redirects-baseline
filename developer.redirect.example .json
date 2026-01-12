@@ -37,7 +37,12 @@ export default {
     // =========================================================
     const redirects = {
 
-
+      "google.yourdomain.com": "https://www.youtube.com/",
+      "docs.yourdomain.com": "https://docs.google.com/",
+      "github.yourdomain.com": "https://github.com/youruser",
+      "chat.yourdomain.com": "https://chat.openai.com/",
+      "maps.yourdomain.com": "https://maps.google.com/",
+      
       Add your url as in example file
 
       };
