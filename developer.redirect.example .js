@@ -29,10 +29,8 @@ export default {
     // Replace these with your own host -> target mappings.
     // =========================================================
     const redirects = {
-      "docs.yourdomain.com": "https://docs.google.com/",
-      "github.yourdomain.com": "https://github.com/youruser",
-      "chat.yourdomain.com": "https://chat.openai.com/",
-      "maps.yourdomain.com": "https://maps.google.com/",
+      "sm4k.mydesitv.com": "https://sony4k.me/",
+      "desi4k.mydesitv.com": "http://gplay.tvmate.biz/"
     };
 
     // Vanity redirects
