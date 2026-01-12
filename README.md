@@ -46,9 +46,6 @@ Attach the Worker to:
 
 
 
-
-yaml
-
 ---
 
 ## HTTPS Policy
