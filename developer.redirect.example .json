@@ -1,17 +1,13 @@
-**** Remove this heading line before paste - For developer preview only***********
-for final file use the content from - worker.js file
-
-
 export default {
   async fetch(request) {
     const url = new URL(request.url);
     const host = url.hostname.toLowerCase();
 
     // =========================================================
-    // PREVIEW-ONLY HELPER (developer-only trick)
-    // - Preview runs on *.workers.dev, so your redirects won't match there.
-    // - This block makes Preview show useful debug output.
-    // - Safe to remove later.
+    // PREVIEW-ONLY HELPER
+    // Preview runs on *.workers.dev so redirects won't match there.
+    // This block returns debug JSON in Preview.
+    // Remove this block after testing (optional).
     // =========================================================
     if (host.endsWith(".workers.dev")) {
       return new Response(
@@ -19,21 +15,18 @@ export default {
           {
             message: "Worker preview active",
             preview_hostname: host,
-            note: "Redirects only trigger on your real routed domains (e.g., desi4k.mydesitv.com).",
-            example_test_url: "https://desi4k.mydesitv.com/"
+            note: "Redirects only trigger on real routed domains (e.g., desi4k.mydesitv.com)."
           },
           null,
           2
         ),
-        {
-          status: 200,
-          headers: { "content-type": "application/json; charset=utf-8" }
-        }
+        { status: 200, headers: { "content-type": "application/json; charset=utf-8" } }
       );
     }
 
     // =========================================================
-    // FINAL: Redirect map (add all subdomains here)
+    // Redirect map (EXAMPLE)
+    // Replace these with your own host -> target mappings.
     // =========================================================
     const redirects = {
 
