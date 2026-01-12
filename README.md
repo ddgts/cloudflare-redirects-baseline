@@ -40,6 +40,11 @@ Use `desi4k`, `tv4k`, etc.
 Attach the Worker to:
 .yourdomain.com/
 
+> Optional: A sample redirect mapping is provided in `redirects.example.json`
+> for documentation and future reference. The active configuration lives in
+> `worker.js`.
+
+
 
 
 yaml
