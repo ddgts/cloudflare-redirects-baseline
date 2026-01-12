@@ -29,30 +29,17 @@ export default {
     // Replace these with your own host -> target mappings.
     // =========================================================
     const redirects = {
-
-      "google.yourdomain.com": "https://www.youtube.com/",
       "docs.yourdomain.com": "https://docs.google.com/",
       "github.yourdomain.com": "https://github.com/youruser",
       "chat.yourdomain.com": "https://chat.openai.com/",
       "maps.yourdomain.com": "https://maps.google.com/",
-      
-      Add your url as in example file
+    };
 
-      };
-
-    // 1) Vanity redirects — redirect immediately
+    // Vanity redirects
     const target = redirects[host];
     if (target) return Response.redirect(target, 301);
 
-    // 2) Main site only — force HTTPS (edit these if needed)
-    const mainHosts = new Set(["yourdomain.com", "www.yourdomain.com"]);
-    if (url.protocol === "http:" && mainHosts.has(host)) {
-      url.protocol = "https:";
-      return Response.redirect(url.toString(), 301);
-    }
-
-    // 3) Unknown hostnames — block
+    // Unknown hostnames — block
     return new Response("Not found", { status: 404 });
   }
 };
-
