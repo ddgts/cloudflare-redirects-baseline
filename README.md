@@ -38,9 +38,9 @@ Use `desi4k`, `tv4k`, etc.
 
 ## Worker Route
 Attach the Worker to:
-
-
 .yourdomain.com/
+
+
 
 yaml
 
