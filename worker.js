@@ -1,9 +1,9 @@
 export default {
-  fetch(request) {
-    const url = new URL(request.url);
+fetch(request) {
+const url = new URL(request.url);
 
-    // FINAL BASELINE — Vanity redirect map
-    const redirects = {
+// Map host -> upstream ORIGIN ONLY (scheme + host). Use http upstream when needed.
+const ORIGIN_MAP = {
       "google.yourdomain.com": "https://www.youtube.com/",
       "docs.yourdomain.com": "https://docs.google.com/",
       "github.yourdomain.com": "https://github.com/youruser",
@@ -25,18 +25,28 @@ export default {
       "video4k.yourdomain.com": "http://venmo.com/"
     };
 
-    // 1) Vanity redirects — redirect immediately (no HTTPS forcing)
-    const target = redirects[url.hostname];
-    if (target) return Response.redirect(target, 301);
+    
+// Vanity redirects — preserve path + query
+const upstreamOrigin = ORIGIN_MAP[url.hostname];
+if (upstreamOrigin) {
+const dest = new URL(upstreamOrigin);
 
-    // 2) Main site only — force HTTPS
-    const mainHosts = new Set(["yourdomain.com", "www.yourdomain.com"]);
-    if (url.protocol === "http:" && mainHosts.has(url.hostname)) {
-      url.protocol = "https:";
-      return Response.redirect(url.toString(), 301);
-    }
+// Preserve the exact request path/query (critical for /stalker_portal/server/*.php calls)
+dest.pathname = url.pathname;
+dest.search = url.search;
 
-    // 3) Unknown hostnames — block
-    return new Response("Not found", { status: 404 });
-  }
+// If the user hits bare host "/", many portals expect /stalker_portal/c/
+// Optional: only do this for hostnames you know are stalker portals
+if (dest.pathname === "/") {
+// If you want EVERYTHING to go to portal home when "/" is requested:
+// dest.pathname = "/stalker_portal/c/";
+// Leave as-is if you prefer strict preservation.
+}
+
+// 302 is safer for STB clients (avoids sticky caching)
+return Response.redirect(dest.toString(), 302);
+}
+
+return new Response("Not found", { status: 404 });
+}
 };
